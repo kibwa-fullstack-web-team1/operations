@@ -16,6 +16,7 @@ services:
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - AWS_REGION=${AWS_REGION}
       - S3_BUCKET_NAME=${S3_BUCKET_NAME}
+      - VOICE_ANALYSIS_SERVICE_URL=http://voice-analysis-service:8003
     depends_on:
       - user-service # DB 의존성 제거, user-service에만 의존
     networks:
