@@ -33,6 +33,22 @@ services:
     networks:
       - app-network
 
+  voice-analysis-service:
+    container_name: voice-analysis-service
+    build:
+      context: ../
+      dockerfile: voice-analysis-service/Dockerfile
+    ports:
+      - "8003:8003"
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
+      - TF_SERVING_URL=${TF_SERVING_URL}
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
