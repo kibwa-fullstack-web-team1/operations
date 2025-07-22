@@ -50,6 +50,20 @@ services:
     networks:
       - app-network
 
+  notification-service:
+    container_name: notification-service
+    build:
+      context: ../
+      dockerfile: notification-service/Dockerfile
+    ports:
+      - "8002:8002"
+    environment:
+      - AWS_SES_SNS_ACCESS_KEY_ID=${AWS_SES_SNS_ACCESS_KEY_ID}
+      - AWS_SES_SNS_SECRET_ACCESS_KEY=${AWS_SES_SNS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
