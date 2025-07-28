@@ -6,15 +6,8 @@ services:
       dockerfile: daily-question-service/Dockerfile
     ports:
       - "8001:8001"
-    environment:
-      - DATABASE_URL=${DATABASE_URL} # .env 파일에서 로드
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - USER_SERVICE_URL=http://user-service:8000
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - AWS_REGION=${AWS_REGION}
-      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
-      - VOICE_ANALYSIS_SERVICE_URL=http://voice-analysis-service:8003
+    env_file:
+      - .env
     depends_on:
       - user-service # DB 의존성 제거, user-service에만 의존
     networks:
@@ -27,8 +20,8 @@ services:
       dockerfile: user-service/Dockerfile
     ports:
       - "8000:8000"
-    environment:
-      - DATABASE_URL=${DATABASE_URL} # .env 파일에서 로드
+    env_file:
+      - .env
     networks:
       - app-network
 
@@ -39,12 +32,8 @@ services:
       dockerfile: voice-analysis-service/Dockerfile
     ports:
       - "8003:8003"
-    environment:
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - AWS_REGION=${AWS_REGION}
-      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
-      - TF_SERVING_URL=${TF_SERVING_URL}
+    env_file:
+      - .env
     networks:
       - app-network
 
@@ -55,13 +44,8 @@ services:
       dockerfile: notification-service/Dockerfile
     ports:
       - "8002:8002"
-    environment:
-      - AWS_SES_SNS_ACCESS_KEY_ID=${AWS_SES_SNS_ACCESS_KEY_ID}
-      - AWS_SES_SNS_SECRET_ACCESS_KEY=${AWS_SES_SNS_SECRET_ACCESS_KEY}
-      - AWS_REGION=${AWS_REGION}
-      - KAFKA_BROKER_URL=${KAFKA_BROKER_URL}
-      - DAILY_QUESTION_SERVICE_URL=${DAILY_QUESTION_SERVICE_URL}
-      - USER_SERVICE_URL=${USER_SERVICE_URL}
+    env_file:
+      - .env
     depends_on:
       kafka:
         condition: service_healthy
