@@ -1,4 +1,16 @@
 services:
+  memory-flip-card-service:
+    container_name: memory-flip-card
+    build:
+      context: ../
+      dockerfile: memory-flip-card/Dockerflie
+    ports:
+     - "8020:8020"
+    env_file:
+     - .env
+    networks:
+     - app-network
+
   daily-question-service:
     container_name: daily-question-service
     build:
