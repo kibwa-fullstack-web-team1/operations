@@ -3,7 +3,7 @@ services:
     container_name: memory-flip-card
     build:
       context: ../
-      dockerfile: memory-flip-card/Dockerflie
+      dockerfile: memory-flip-card/Dockerfile
     ports:
      - "8020:8020"
     env_file:
@@ -107,6 +107,36 @@ services:
       - zookeeper
     networks:
       - app-network
+
+  reward-service:
+      container_name: reward-service
+      build:
+        context: ../
+        dockerfile: reward-service/Dockerfile
+      ports:
+        - "8004:8004"
+      env_file:
+        - .env
+      depends_on:
+        kafka:
+          condition: service_healthy
+      networks:
+        - app-network
+
+  story-sequencer:
+    container_name: story-sequencer
+    build:
+      context: ../
+      dockerfile: story-sequencer/Dockerfile
+    ports:
+      - "8011:8011"
+    env_file:
+      - .env
+    depends_on:
+      - user-service
+    networks:
+      - app-network
+
 
 networks:
   app-network:
