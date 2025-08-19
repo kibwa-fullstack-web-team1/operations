@@ -13,7 +13,7 @@ echo "🚀 2. Docker Compose 서비스를 새로 빌드하고 백그라운드에
 # --build 옵션: 소스 코드가 변경되지 않았더라도 이미지를 강제로 다시 빌드
 # -d 옵션: 백그라운드에서 실행
 docker compose build
-docker compose up -d --no-build --remove-orphans
+docker compose up -d --remove-orphans
 
 echo "-----------------------------------------------------"
 echo "✅ 서비스가 성공적으로 시작되었습니다. 현재 실행 중인 컨테이너:"

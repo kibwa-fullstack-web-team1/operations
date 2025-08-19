@@ -1,15 +1,15 @@
 services:
-  memory-flip-card-service:
-    container_name: memory-flip-card
-    build:
-      context: ../
-      dockerfile: memory-flip-card/Dockerfile
-    ports:
-     - "8020:8020"
-    env_file:
-     - .env
-    networks:
-     - app-network
+  # memory-flip-card-service:
+  #   container_name: memory-flip-card
+  #   build:
+  #     context: ../memory-flip-card
+  #     dockerfile: Dockerfile
+  #   ports:
+  #    - "8020:8020"
+  #   env_file:
+  #    - .env
+  #   networks:
+  #    - app-network
 
   daily-question-service:
     container_name: daily-question-service
@@ -122,6 +122,21 @@ services:
           condition: service_healthy
       networks:
         - app-network
+
+  dify-data-sync-service:
+    container_name: dify-data-sync-service
+    build:
+      context: ../
+      dockerfile: dify-data-sync-service/Dockerfile
+    ports:
+      - "8005:8005"
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+
+
 
   story-sequencer:
     container_name: story-sequencer
